@@ -16,11 +16,19 @@ app.secret_key = os.urandom(24)  # For session management
 
 
 # Configuration
+# Configuration
 CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
-REDIRECT_URI = os.getenv('REDIRECT_URI')
+REDIRECT_URI = os.getenv('REDIRECT_URI', 'https://spotify-stats-rprj.onrender.com/callback')
 SCOPE = os.getenv('SPOTIFY_SCOPE', "user-top-read user-read-recently-played user-library-read")
 
+# OAuth setup with full callback URL
+sp_oauth = SpotifyOAuth(
+    client_id=CLIENT_ID,
+    client_secret=CLIENT_SECRET,
+    redirect_uri=REDIRECT_URI,
+    scope=SCOPE
+)
 if not all([CLIENT_ID, CLIENT_SECRET, REDIRECT_URI]):
     raise ValueError("Missing required environment variables. Check .env file.")
 
