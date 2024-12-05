@@ -1,4 +1,0 @@
-rm -rf spotify_reports/  # Clean old files
-python fetch_data.py
-python report.py
-ls -l spotify_reports/
