@@ -24,16 +24,24 @@ SCOPE = 'user-top-read user-read-recently-played user-library-read'
 def create_spotify_oauth():
     """Create SpotifyOAuth instance for authentication"""
     try:
+        # Add debug logging
+        log_debug(f"Creating OAuth with URI: {REDIRECT_URI}")
+        
         oauth = SpotifyOAuth(
             client_id=CLIENT_ID,
             client_secret=CLIENT_SECRET,
             redirect_uri=REDIRECT_URI,
             scope=SCOPE,
             cache_path=False,
-            show_dialog=True  # Force display of auth dialog
+            show_dialog=True,
+            requests_session=True,  # Enable session handling
+            open_browser=False  # Prevent automatic browser opening
         )
+        
         if DEBUG:
-            log_debug(f"OAuth created with redirect URI: {REDIRECT_URI}")
+            log_debug("OAuth object created successfully")
+            log_debug(f"Auth URL: {oauth.get_authorize_url()}")
+            
         return oauth
     except Exception as e:
         log_debug(f"OAuth creation failed: {str(e)}")
