@@ -19,7 +19,10 @@ app.secret_key = os.urandom(24)  # For session management
 # Configuration
 CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
 CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
-REDIRECT_URI = os.getenv('REDIRECT_URI', 'https://spotify-stats-rprj.onrender.com/callback')
+# Remove default value to ensure environment variable is used
+REDIRECT_URI = os.getenv('REDIRECT_URI')
+if not REDIRECT_URI:
+    raise ValueError("REDIRECT_URI must be set in environment variables")
 SCOPE = os.getenv('SPOTIFY_SCOPE', "user-top-read user-read-recently-played user-library-read")
 
 # OAuth setup with full callback URL
