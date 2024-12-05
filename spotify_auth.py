@@ -1,10 +1,11 @@
 # spotify_auth.py
-import spotipy
+import os
 from spotipy.oauth2 import SpotifyOAuth
 
-CLIENT_ID = '45c01f01bb3447b2bb2c99902d9461c5'
-CLIENT_SECRET = '2ce37e31b5b6411885dd4d8b4d7f9478'
-REDIRECT_URI = 'http://localhost:8501/'  # Streamlit default port
+# Get deployment URL from environment or use localhost
+REDIRECT_URI = os.getenv('REDIRECT_URI', 'http://localhost:8501/')
+CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID', '45c01f01bb3447b2bb2c99902d9461c5')
+CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET', '2ce37e31b5b6411885dd4d8b4d7f9478')
 SCOPE = 'user-top-read user-read-recently-played user-library-read'
 
 def create_spotify_oauth():
@@ -14,7 +15,7 @@ def create_spotify_oauth():
         client_secret=CLIENT_SECRET,
         redirect_uri=REDIRECT_URI,
         scope=SCOPE,
-        cache_path='.spotifycache'
+        cache_path=False  # Disable caching for cloud deployment
     )
 
 def get_token():
