@@ -26,25 +26,31 @@ def create_spotify_oauth():
     try:
         # Add debug logging
         log_debug(f"Creating OAuth with URI: {REDIRECT_URI}")
+        log_debug(f"Client ID exists: {'Yes' if CLIENT_ID else 'No'}")
+        log_debug(f"Client Secret exists: {'Yes' if CLIENT_SECRET else 'No'}")
+        
+        # Ensure REDIRECT_URI ends with slash
+        clean_uri = REDIRECT_URI.rstrip('/') + '/'
         
         oauth = SpotifyOAuth(
             client_id=CLIENT_ID,
             client_secret=CLIENT_SECRET,
-            redirect_uri=REDIRECT_URI,
+            redirect_uri=clean_uri,
             scope=SCOPE,
             cache_path=False,
             show_dialog=True,
-            requests_session=True,  # Enable session handling
-            open_browser=False  # Prevent automatic browser opening
+            requests_session=False,  # Disable session handling for better compatibility
+            open_browser=False
         )
         
-        if DEBUG:
-            log_debug("OAuth object created successfully")
-            log_debug(f"Auth URL: {oauth.get_authorize_url()}")
-            
+        # Test auth URL generation
+        auth_url = oauth.get_authorize_url()
+        log_debug(f"Generated auth URL: {auth_url}")
+        
         return oauth
     except Exception as e:
         log_debug(f"OAuth creation failed: {str(e)}")
+        log_debug(f"Full error details: {repr(e)}")
         raise
 
 def get_token():
