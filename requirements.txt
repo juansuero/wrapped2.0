@@ -1,4 +1,7 @@
-streamlit==1.31.0
+# requirements.txt
+Flask==3.0.2
+gunicorn==21.2.0
+python-dotenv==1.0.1
 spotipy==2.23.0
-pandas==2.2.0
-plotly==5.18.0
+requests==2.31.0
+Werkzeug==3.0.1
