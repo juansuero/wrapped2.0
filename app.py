@@ -2,10 +2,7 @@
 from flask import Flask, session, redirect, request, render_template
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
-import pandas as pd
-import json
 import os
-from datetime import datetime
 from flask import jsonify
 from collections import Counter
 from dotenv import load_dotenv
