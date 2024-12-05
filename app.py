@@ -138,20 +138,29 @@ def display_visualizations(data):
         "Popular Tracks", 
         "Genres"
     ])
-# Tab 1: Top Artists
+    # Tab 1: Top Artists
     with tabs[0]:
         st.header("Your Top 50 Artists")
-        # Get unique artists and their total track count
-        artist_counts = period_data.groupby('artist').size().sort_values(ascending=False).head(50)
         
-        for i, (artist, count) in enumerate(artist_counts.items(), 1):
-            artist_data = period_data[period_data['artist'] == artist].iloc[0]
+        # Get all unique artists and their track counts
+        artist_tracks = period_data.groupby('artist').agg({
+            'name': 'count',  # Count tracks per artist
+            'artist_image': 'first',  # Get first image URL
+            'play_rank': 'min'  # Get best ranking
+        }).reset_index()
+        
+        # Sort by number of tracks and then by best ranking
+        artist_tracks = artist_tracks.sort_values(['name', 'play_rank'], 
+                                                ascending=[False, True]).head(50)
+        
+        # Display artists
+        for i, row in artist_tracks.iterrows():
             col1, col2 = st.columns([1, 4])
             with col1:
-                if artist_data['artist_image']:
-                    st.image(artist_data['artist_image'], width=60)
+                if row['artist_image']:
+                    st.image(row['artist_image'], width=60)
             with col2:
-                st.write(f"{i}. **{artist}** - {count} tracks in your top songs")
+                st.write(f"{i+1}. **{row['artist']}** - {row['name']} tracks in your top songs")
     # Tab 2: Top Tracks
     with tabs[1]:
         st.header("Your Most Played Tracks")
