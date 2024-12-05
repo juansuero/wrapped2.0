@@ -1,14 +1,21 @@
-# Spotify Wrapped 2.0
+# Spotify Stats
 
-A personalized Spotify data analysis tool that generates detailed reports of your listening history across different time periods.
+An interactive Spotify listening history analyzer that provides detailed insights into your music preferences.
 
 ## Features
-- Fetches top tracks and artists from Spotify
-- Analyzes listening patterns across multiple timeframes
-- Generates PDF reports with timestamps
-- Stores historical data for comparison
+- Real-time data fetching from Spotify API
+- Multiple time range analysis (4 weeks, 6 months, all time)
+- Top artists and tracks visualization
+- Genre distribution analysis
+- Audio features analysis (danceability, energy, etc.)
+- Interactive UI built with Streamlit
 
-## Installation
+## Prerequisites
+- Python 3.8+
+- Spotify Developer Account
+- Spotify API Credentials
+
+## Setup
 
 1. Clone the repository:
 ```bash
